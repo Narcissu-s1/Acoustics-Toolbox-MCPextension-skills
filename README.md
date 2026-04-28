@@ -1,4 +1,5 @@
-# AT_MCP 工具集使用文档
+# Acoustics-Toolbox-MCPextension-skills
+一个关于声学工具箱的matlabMCP拓展与声场仿真 skills
 
 ## 部署
 
