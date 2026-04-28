@@ -1,0 +1,119 @@
+{
+  "tools": [
+    {
+      "name": "at_init",
+      "title": "Initialize Acoustics Toolbox",
+      "description": "初始化 Acoustics Toolbox 的 MATLAB 路径和系统 PATH（首次使用前必须调用）",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    },
+    {
+      "name": "at_make_env",
+      "title": "Create Environment File",
+      "description": "生成 Acoustics Toolbox 环境文件 (.env)。ssp_str 格式: 'depth1,speed1;depth2,speed2;...'。recv_depth_str/recv_range_str 格式: 'min,max' 自动生成501点，或 'v1;v2;v3' 列表。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "filename": { "type": "string", "description": "文件名 (不含扩展名)" },
+          "title": { "type": "string", "description": "标题" },
+          "freq": { "type": "number", "description": "频率 (Hz)" },
+          "ssp_str": { "type": "string", "description": "声速剖面 'd1,cp1;d2,cp2;...'" },
+          "bottom_cp": { "type": "number", "description": "海底声速 (m/s)" },
+          "bottom_density": { "type": "number", "description": "海底密度 (g/cm³)" },
+          "bottom_alpha": { "type": "number", "description": "海底衰减 (dB/λ)" },
+          "source_depth": { "type": "number", "description": "源深度 (m)" },
+          "recv_depth_str": { "type": "string", "description": "接收深度 'min,max' 或 'd1;d2;...' (m)" },
+          "recv_range_str": { "type": "string", "description": "接收距离 'min,max' 或 'r1;r2;...' (km)" },
+          "model_type": { "type": "string", "description": "模型: BELLHOP / KRAKEN / KRAKENC / SCOOTER" },
+          "nbeams": { "type": "integer", "description": "波束数" },
+          "angle_min": { "type": "number", "description": "最小掠射角 (度)" },
+          "angle_max": { "type": "number", "description": "最大掠射角 (度)" }
+        },
+        "required": ["filename", "title", "freq", "ssp_str", "bottom_cp", "bottom_density", "bottom_alpha", "source_depth", "recv_depth_str", "recv_range_str", "model_type", "nbeams", "angle_min", "angle_max"]
+      }
+    },
+    {
+      "name": "at_run_model",
+      "title": "Run Propagation Model",
+      "description": "运行传播模型 (BELLHOP/KRAKEN/KRAKENC/SCOOTER) 计算声场",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "filename": { "type": "string", "description": "环境文件名 (不含扩展名)" },
+          "model_type": { "type": "string", "description": "模型: BELLHOP / KRAKEN / KRAKENC / SCOOTER" }
+        },
+        "required": ["filename", "model_type"]
+      }
+    },
+    {
+      "name": "at_plot_result",
+      "title": "Plot Simulation Result",
+      "description": "绘制计算结果并保存为 PNG 图片。支持 shd(传播损失)、ray(射线轨迹)、arr(到达结构)、mode(简正波模态)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "filename": { "type": "string", "description": "文件基名 (不含扩展名)" },
+          "plot_type": { "type": "string", "description": "绘图类型: shd / ray / arr / mode" }
+        },
+        "required": ["filename", "plot_type"]
+      }
+    },
+    {
+      "name": "at_read_result",
+      "title": "Read Result Data",
+      "description": "读取计算结果并以文本形式返回。支持 shd(声场)、arr(到达结构)、ray(射线)、mode(模态)、env(环境参数)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "filename": { "type": "string", "description": "文件基名 (不含扩展名)" },
+          "data_type": { "type": "string", "description": "数据类型: shd / arr / ray / mode / env" }
+        },
+        "required": ["filename", "data_type"]
+      }
+    },
+    {
+      "name": "at_soundspeed",
+      "title": "Calculate Sound Speed",
+      "description": "计算海水声速。支持 Mackenzie / Del Grosso / Chen-Millero / State 四种公式",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "S": { "type": "number", "description": "盐度 (‰)" },
+          "T": { "type": "number", "description": "温度 (°C)" },
+          "D": { "type": "number", "description": "深度(m) 或 压力(dbar)" },
+          "equation": { "type": "string", "description": "公式: mackenzie / del grosso / chen / state" }
+        },
+        "required": ["S", "T", "D"]
+      }
+    }
+  ],
+  "signatures": {
+    "at_init": {
+      "function": "at_init",
+      "input": { "order": [] }
+    },
+    "at_make_env": {
+      "function": "at_make_env",
+      "input": { "order": ["filename", "title", "freq", "ssp_str", "bottom_cp", "bottom_density", "bottom_alpha", "source_depth", "recv_depth_str", "recv_range_str", "model_type", "nbeams", "angle_min", "angle_max"] }
+    },
+    "at_run_model": {
+      "function": "at_run_model",
+      "input": { "order": ["filename", "model_type"] }
+    },
+    "at_plot_result": {
+      "function": "at_plot_result",
+      "input": { "order": ["filename", "plot_type"] }
+    },
+    "at_read_result": {
+      "function": "at_read_result",
+      "input": { "order": ["filename", "data_type"] }
+    },
+    "at_soundspeed": {
+      "function": "at_soundspeed",
+      "input": { "order": ["S", "T", "D", "equation"] }
+    }
+  }
+}

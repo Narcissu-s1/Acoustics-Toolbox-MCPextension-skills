@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "matlab": {
+      "command": "matlab-mcp-core-server.exe",
+      "args": [
+        "--matlab-root",
+        "D:\\Program Files\\matlab",
+        "--log-level",
+        "info",
+        "--extension-file",
+        "./AT_MCP/at_extension.json",
+        "--initial-working-folder",
+        "."
+      ]
+    }
+  }
+}
