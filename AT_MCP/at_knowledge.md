@@ -7,6 +7,7 @@
 | 日期 | 模型 | 频率(Hz) | 源深度(m) | 接收范围(km) | 接收深度(m) | 生成文件 | 备注 |
 |------|------|----------|-----------|-------------|-------------|----------|------|
 | 2026-04-27 | BELLHOP | 100 | 25 | 0.5~10 | 10~500 | demo.shd, demo_shd.png | 首次端到端测试通过，TL 26.0~313.1 dB |
+| 2026-05-04 | BELLHOP | 10000 | 100 | 0.1~10 | 0~5000 | munk10k.shd, munk10k_shd.png | Munk 剖面 10kHz 高频深水，TL 40~113 dB，声道轴 1300m 从 4km 起被照亮 |
 
 ## 参数模板
 
@@ -24,11 +25,19 @@ source_depth=200, recv_depth="10,500", recv_range="1,50"
 model=BELLHOP
 ```
 
-### Munk 剖面
+### Munk 剖面（低频，声道轴置源）
 ```
 freq=50, ssp="0,1530;500,1480;1300,1500;3000,1535;5000,1550", bottom_cp=1600
 source_depth=1300, recv_depth="100,5000", recv_range="10,200"
 model=BELLHOP, nbeams=5000, angle_min=-15, angle_max=15
+```
+
+### Munk 剖面（高频 10kHz，浅源）
+```
+freq=10000, ssp=37点 Munk 公式计算 (0~5000m, 声道轴1300m), bottom_cp=1600, density=2.0, alpha=0.5
+source_depth=100, recv_depth="0,5000", recv_range="0.1,10"
+model=BELLHOP, nbeams=5000, angle_min=-15, angle_max=15
+注: 浅源(100m)在声道轴上方，近距离有信号，声道轴从4km起被照亮，TL 40~113 dB
 ```
 
 ## 踩坑记录

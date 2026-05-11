@@ -1,5 +1,5 @@
 ---
-name: acoustic-simulation
+name: acoustic-simulation-result
 description: >
   水声声场仿真工作流。当用户需要进行声场仿真、计算传播损失(TL)、运行
   Bellhop/Kraken/SCOOTER 模型、分析水声传播、射线追踪、简正波、到达结构、生成 env
@@ -68,9 +68,14 @@ description: >
 根据输出类型选择操作：
 1. **可视化** — at_plot_result(filename, 'shd'|'ray'|'arr'|'mode')，告知用户 PNG 路径
 2. **文本摘要** — at_read_result(filename, 'shd'|'arr'|'ray'|'mode'|'env')，展示关键数值
-3. **数据导出** — 提示用户可通过 `mcp__matlab__evaluate_matlab_code` 将数据加载到 MATLAB 工作区进一步分析（如自定义绘图、提取特定路径 TL 曲线）
-4. **格式转换** — 如需要，将数据导出为 .mat 或 CSV 供外部工具使用
-5. **参数记录** — 列出本次仿真的关键参数，便于复现
+   - ⚠️ 仅在首次查看时使用一次,避免重复调用消耗上下文
+   - 如需再次确认数据范围,直接读取之前的输出文本
+3. **数据导出** — 用 `mcp__matlab__evaluate_matlab_code` 按需提取数据:
+   - 加载 .shd 文件
+   - 提取需要的切片(特定深度/距离)
+   - 保存到 CSV/MAT 文件
+   - **只返回文件路径和统计信息**,不返回数据数组本身
+4. **参数记录** — 列出本次仿真的关键参数,便于复现
 
 询问用户是否需要进一步的数据加工。
 

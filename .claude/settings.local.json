@@ -1,0 +1,11 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "matlab"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__matlab__at_make_env"
+    ]
+  }
+}
